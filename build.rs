@@ -18,6 +18,8 @@ fn main() {
             .expect("Failed to create mat.c");
     }
 
+    println!("cargo:rerun-if-changed=vendor/libmat/mat.h");
+
     cc::Build::new()
         .file(&mat_c)
         .include(libmat_dir)
