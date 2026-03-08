@@ -1,3 +1,22 @@
+//! Rust bindings for [libmat](https://github.com/alvgaona/libmat), an stb-style single-header
+//! linear algebra library in pure C.
+//!
+//! # Usage
+//!
+//! ```
+//! use libmat_rs::Mat;
+//!
+//! let a = Mat::from_slice(2, 2, &[1.0, 2.0, 3.0, 4.0]);
+//! let b = Mat::eye(2);
+//! let c = a.mul(&b);
+//! assert!(c.equals(&a));
+//! ```
+//!
+//! # Storage
+//!
+//! Matrices use **column-major** storage (BLAS-compatible). When constructing from a slice,
+//! values are laid out column by column.
+
 mod ffi {
     extern "C" {
         pub fn mat_mat(rows: usize, cols: usize) -> *mut Mat;
@@ -24,37 +43,49 @@ mod ffi {
     }
 }
 
+/// A matrix backed by libmat's C implementation.
+///
+/// Owns its underlying C allocation and frees it on drop.
+/// Uses column-major storage.
 pub struct Mat(*mut ffi::Mat);
 
 impl Mat {
+    /// Creates a zero-initialized matrix with the given dimensions.
     pub fn new(rows: usize, cols: usize) -> Self {
         Mat(unsafe { ffi::mat_mat(rows, cols) })
     }
 
+    /// Creates a matrix from a slice of values in column-major order.
     pub fn from_slice(rows: usize, cols: usize, data: &[f32]) -> Self {
         Mat(unsafe { ffi::mat_from(rows, cols, data.as_ptr()) })
     }
 
+    /// Creates an identity matrix of the given dimension.
     pub fn eye(dim: usize) -> Self {
         Mat(unsafe { ffi::mat_reye(dim) })
     }
 
+    /// Returns the matrix product `self * other`.
     pub fn mul(&self, other: &Mat) -> Self {
         Mat(unsafe { ffi::mat_rmul(self.0, other.0) })
     }
 
+    /// Returns the element-wise sum `self + other`.
     pub fn add(&self, other: &Mat) -> Self {
         Mat(unsafe { ffi::mat_radd(self.0, other.0) })
     }
 
+    /// Returns the element at `(row, col)`.
     pub fn at(&self, row: usize, col: usize) -> f32 {
         unsafe { ffi::mat_at(self.0, row, col) }
     }
 
+    /// Returns `true` if all elements are equal.
     pub fn equals(&self, other: &Mat) -> bool {
         unsafe { ffi::mat_equals(self.0, other.0) }
     }
 
+    /// Prints the matrix to stdout.
     pub fn print(&self) {
         unsafe { ffi::mat_print(self.0) }
     }
