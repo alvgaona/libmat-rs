@@ -1,5 +1,10 @@
 # libmat-rs
 
+[![crates.io](https://img.shields.io/crates/v/libmat-rs)](https://crates.io/crates/libmat-rs)
+[![docs.rs](https://docs.rs/libmat-rs/badge.svg)](https://docs.rs/libmat-rs)
+[![ci](https://github.com/alvgaona/libmat-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/alvgaona/libmat-rs/actions/workflows/ci.yml)
+[![license](https://img.shields.io/crates/l/libmat-rs)](LICENSE)
+
 Rust bindings for [libmat](https://github.com/alvgaona/libmat), an stb-style single-header
 linear algebra library in pure C.
 
