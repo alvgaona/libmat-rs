@@ -47,4 +47,4 @@ wrapped. Contributions are welcome.
 
 ## License
 
-LGPL-3.0-or-later
+Apache-2.0
