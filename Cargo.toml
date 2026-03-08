@@ -8,7 +8,7 @@ repository = "https://github.com/alvgaona/libmat-rs"
 homepage = "https://github.com/alvgaona/libmat-rs"
 keywords = ["linear-algebra", "matrix", "math", "ffi"]
 categories = ["mathematics", "science", "api-bindings"]
-include = ["src/**/*", "vendor/libmat/mat.h", "build.rs", "Cargo.lock", "LICENSE", "README.md"]
+include = ["src/**/*", "vendor/libmat/mat.h", "build.rs", "LICENSE", "README.md"]
 
 [build-dependencies]
 cc = "1.0"
