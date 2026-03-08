@@ -20,5 +20,6 @@ target
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Vendored C library (cloned at build time)
-/vendor/libmat
+# Vendored C library (only mat.h is tracked)
+/vendor/libmat/*
+!/vendor/libmat/mat.h

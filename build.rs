@@ -1,22 +1,14 @@
+use std::env;
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 fn main() {
     let libmat_dir = Path::new("vendor/libmat");
+    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
+    let mat_c = out_dir.join("mat.c");
 
-    if !libmat_dir.join("mat.h").exists() {
-        panic!(
-            "libmat not found. Clone it first:\n\
-             git clone https://github.com/alvgaona/libmat vendor/libmat"
-        );
-    }
-
-    // Generate mat.c if it doesn't exist (libmat is header-only)
-    let mat_c = libmat_dir.join("mat.c");
-    if !mat_c.exists() {
-        fs::write(&mat_c, "#define MAT_IMPLEMENTATION\n#include \"mat.h\"\n")
-            .expect("Failed to create mat.c");
-    }
+    fs::write(&mat_c, "#define MAT_IMPLEMENTATION\n#include \"mat.h\"\n")
+        .expect("Failed to create mat.c");
 
     println!("cargo:rerun-if-changed=vendor/libmat/mat.h");
 
