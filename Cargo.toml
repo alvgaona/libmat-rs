@@ -1,6 +1,6 @@
 [package]
 name = "libmat-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Rust bindings for libmat, an stb-style single-header linear algebra library in pure C"
 license = "Apache-2.0"
