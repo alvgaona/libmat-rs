@@ -1,22 +1,50 @@
 # libmat-rs
 
-Rust bindings for [libmat](https://github.com/alvgaona/libmat).
-
-## Development
-
-```bash
-git clone https://github.com/alvgaona/libmat vendor/libmat
-cargo build
-cargo test
-```
+Rust bindings for [libmat](https://github.com/alvgaona/libmat), an stb-style single-header
+linear algebra library in pure C.
 
 ## Usage
 
+Add to your `Cargo.toml`:
+
+```toml
+[dependencies]
+libmat-rs = "0.1"
+```
+
 ```rust
-use libmat::Mat;
+use libmat_rs::Mat;
 
 let a = Mat::from_slice(2, 2, &[1.0, 2.0, 3.0, 4.0]);
 let b = Mat::eye(2);
 let c = a.mul(&b);
-c.print();
+
+let eig = a.eigen_sym();
 ```
+
+Matrices use **column-major** storage (BLAS-compatible).
+
+## API
+
+| Function | Description |
+|----------|-------------|
+| `Mat::new(rows, cols)` | Zero-initialized matrix |
+| `Mat::from_slice(rows, cols, data)` | Matrix from column-major slice |
+| `Mat::eye(dim)` | Identity matrix |
+| `mat.mul(other)` | Matrix multiplication |
+| `mat.add(other)` | Element-wise addition |
+| `mat.at(row, col)` | Element access |
+| `mat.eigvals()` | Eigenvalues (general) |
+| `mat.eigvals_sym()` | Eigenvalues (symmetric) |
+| `mat.eigen()` | Eigendecomposition (general) |
+| `mat.eigen_sym()` | Eigendecomposition (symmetric) |
+
+## Coverage
+
+This crate exposes a subset of libmat's functionality. The underlying C library supports many
+more operations (SVD, Cholesky, QR, LU, solvers, norms, SIMD kernels, etc.) that are not yet
+wrapped. Contributions are welcome.
+
+## License
+
+LGPL-3.0-or-later
